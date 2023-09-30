@@ -75,9 +75,10 @@
   {#if state === "loading"}
     <Preloader />
   {:else if state === "ready"}
-    <button class="absolute inset-0 block" on:click={init}
-      ><span
-        class="text-white font-mono bg-black uppercase py-1 px-2 cursor-default"
+    <button
+      class="appearance-none absolute inset-0 h-full w-full flex flex-col justify-center items-center font-ocrb"
+      on:click={init}
+      ><span class="block text-white font-mono bg-black uppercase py-1 px-2"
         >Tap to begin</span
       ></button
     >
@@ -89,3 +90,7 @@
     </div>
   {/if}
 </main>
+
+<svelte:head>
+  <title>Seratone</title>
+</svelte:head>
