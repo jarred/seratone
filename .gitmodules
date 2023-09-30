@@ -1,0 +1,3 @@
+[submodule "src/lib/play.core"]
+	path = src/lib/play.core
+	url = https://github.com/ertdfgcvb/play.core.git

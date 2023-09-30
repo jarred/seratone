@@ -10,4 +10,5 @@ An audio effects experiment
 
 ## References
 
--
+- https://play.ertdfgcvb.xyz/#/src/sdf/balls
+- https://play.ertdfgcvb.xyz/#/src/sdf/circle
