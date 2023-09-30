@@ -10,12 +10,12 @@
   let el;
 
   onMount(async () => {
-    const program = await import("../ascii/bg");
+    const program = await import("../ascii/circles");
     run(program, { element: el, allowSelect: true, radius: value });
   });
 </script>
 
 <pre
   bind:this={el}
-  class="absolute inset-0 bg-black text-[#333] pointer-events-none z-0"
+  class="absolute inset-[-30px] text-[#808080] pointer-events-none z-0 font-mono tracking-[0.03em] text-[14px] leading-[1.25em]"
 />

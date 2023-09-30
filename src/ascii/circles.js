@@ -6,33 +6,31 @@
 
 import { sdCircle } from '$lib/play.core/src/modules/sdf'
 import { sort } from '$lib/play.core/src/modules/sort'
+import { main as bgMain } from '../ascii/bg'
 
-const density = sort('/\\MXYZabc!?=-. ', 'Simple Console', false)
+const density = sort('/\\|=— ', 'Simple Console', false)
 
-export const settings = { fps : 1 }
+export const settings = { fps : 25 }
 
 export function main(coord, context, cursor, buffer) {
-
-  // console.log(context.settings.radius);
-
 	const t  = context.time * 0.002
     const m = Math.min(context.cols, context.rows)
     const a = context.metrics.aspect
 
 	const st = {
-		x : 2.0 * (coord.x - context.cols / 2) / m * a,
-		y : 2.0 * (coord.y - context.rows / 2) / m
+		x : 1.5 * (coord.x - context.cols / 2) / m * a,
+		y : 1.5 * (coord.y - context.rows / 2) / m
 	}
 
-  // const radius = (Math.cos(t)) * 0.4 + 0.5
-  let radius = .3;
+  let radius = window.mix/1
 	const d = sdCircle(st, radius)
-	const c = 1.0 - Math.exp(-5 * Math.abs(d))
+	const c = 1.0 - Math.exp(-20 * Math.abs(d))
 	const index = Math.floor(c * density.length)
 
-	return {
-		char : coord.x % 2 ? ' ' : density[index],
-		backgroundColor : 'black',
-		color : 'white'
+	let char = density[index];
+	if (char !== ' ' && window.state === "playing") {
+		return char;
 	}
+
+	return bgMain(coord, context, cursor, buffer);
 }

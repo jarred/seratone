@@ -2,3 +2,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "OCRB";
+  src: url("/fonts/OCRB.woff") format("woff"), url("OCRB.woff2") format("woff2");
+}
+
+html,
+body {
+  @apply overflow-hidden;
+  overscroll-behavior-y: none;
+}

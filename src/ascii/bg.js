@@ -7,13 +7,11 @@ https://www.shadertoy.com/view/tdsyRf
 */
 
 import { map } from '$lib/play.core/src/modules/num';
-import { sort } from '$lib/play.core/src/modules/sort.js'
 import { vec2, rot, add, mulN, addN, subN, length } from '$lib/play.core/src/modules/vec2.js'
 
 const { min, sin, cos, floor } = Math
 
-const density  = '#Wabc:+-. '
-const colors = ['deeppink', 'black', 'red', 'blue', 'orange', 'yellow']
+const density  = '#ABC:. '
 
 export function main(coord, context, cursor, buffer) {
   const t = context.time * 0.00004
@@ -41,10 +39,8 @@ export function main(coord, context, cursor, buffer) {
   c = map(sin(c * 0.5), -1, 1, 0, 1)
 
   const index = floor(c * (density.length - 1))
-  // const color = floor(c * (colors.length - 1))
 
   return {
-    // char : (coord.x + coord.y) % 2 ? density[index] : '╲',
     char: density[index],
   }
 }

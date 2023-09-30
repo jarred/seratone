@@ -25,7 +25,7 @@
 </script>
 
 <div
-  class="absolute inset-0 pointer-events-none flex flex-col justify-center items-center"
+  class="absolute inset-0 pointer-events-none flex flex-col justify-center items-center font-ocrb"
 >
   <span class="text-white font-mono bg-black uppercase py-1 px-2"
     >{@html frames[frameIndex]}</span

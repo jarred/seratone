@@ -1,33 +1,43 @@
 <script>
-  import { browser, dev, building, version } from "$app/environment";
+  import { browser } from "$app/environment";
   import Pizzicato from "pizzicato";
-  import Knob from "@bismuthsoft/svelte-dj-knob";
   import Bg from "../components/bg.svelte";
-  import Logo from "../components/logo.svelte";
+  import Knob from "../components/knob.svelte";
   import Preloader from "../components/preloader.svelte";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
 
-  const srcFile = "/charles_aznavour-parce_que_tu_crois.mp3";
-  // const srcFile = "/boom_clap_bachelors-tiden_flyver.mp3";
+  let fileOptions = [
+    "mp3/charles_aznavour-parce_que_tu_crois.mp3",
+    "mp3/boom_clap_bachelors-tiden_flyver.mp3",
+    "mp3/onset_music_group-amaphupho.mp3",
+  ];
+
+  const srcFile = fileOptions[Math.floor(Math.random() * fileOptions.length)];
 
   /** @type {"loading" | "ready" | "playing"} */
   let state = "loading";
-  /** @type {HTMLAudioElement} */
-  let audioEl;
   let input;
   let mix = 0;
   let reverb;
 
+  $: mix, updateEffect();
+
   const init = async () => {
     state = "playing";
+    window.state = state;
     input.play();
   };
 
   const updateEffect = () => {
     if (reverb) reverb.mix = mix;
+    if (browser) {
+      window.mix = mix;
+    }
   };
 
   onMount(() => {
+    window.state = state;
+    window.mix = 0;
     input = new Pizzicato.Sound(
       {
         source: "file",
@@ -38,7 +48,7 @@
       },
       () => {
         state = "ready";
-
+        window.state = state;
         reverb = new Pizzicato.Effects.Reverb({
           time: 1.333,
           decay: 4,
@@ -46,15 +56,20 @@
           mix,
         });
         input.addEffect(reverb);
-        // input.addEffect(flanger);
       }
     );
   });
+
+  onDestroy(() => {
+    if (browser) input.disconnect();
+  });
 </script>
 
-<main class="absolute inset-0 bg-black text-white font-mono">
+<main class="absolute inset-0 bg-black text-white font-mono overflow-hidden">
   {#if browser}
-    <Bg value={mix} />
+    <div class="absolute inset-0" style={`opacity: ${0.2 + mix * 0.8};`}>
+      <Bg value={mix} />
+    </div>
   {/if}
 
   {#if state === "loading"}
@@ -67,28 +82,10 @@
       ></button
     >
   {:else}
-    <div class="relative text-red">
-      <input
-        type="range"
-        min="0"
-        max="1"
-        step="0.01"
-        on:input={updateEffect}
-        bind:value={mix}
-      />
-
-      <Knob
-        min={0}
-        max={1}
-        step={0.01}
-        bind:value={mix}
-        lockCursor={false}
-        size="10rem"
-        strokeWidth={10}
-        bgColor="#AAA"
-        fgColor="red"
-      />
+    <div
+      class="absolute left-0 right-0 top-[90px] bottom-0 justify-center flex flex-col items-center"
+    >
+      <Knob bind:value={mix} max={1} min={0} pixelRange={200} />
     </div>
   {/if}
-  <Logo />
 </main>

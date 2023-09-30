@@ -10,7 +10,6 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
   },
   "devDependencies": {
-    "@bismuthsoft/svelte-dj-knob": "^0.2.1",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/kit": "^1.20.4",
     "autoprefixer": "^10.4.14",
@@ -24,7 +23,6 @@
   },
   "type": "module",
   "dependencies": {
-    "pizzicato": "^0.6.4",
-    "tone": "^14.7.77"
+    "pizzicato": "^0.6.4"
   }
 }
